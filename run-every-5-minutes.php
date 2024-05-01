@@ -13,10 +13,18 @@
 	if (empty($config['domoticz']['hostaddr']))
 		die('domoticz config missing or empty');
 
+	// print_r($config);
+
 	$fritzbox = new ClassFritzBox($config['fritzbox']['hostaddr'], $config['fritzbox']['password'], $config['fritzbox']['username']);
 	$domoticz = new ClassDomoticz($config['domoticz']['hostaddr']);
 
 
 
-	print_r($config);
-	// echo highlight_string(print_r($config, true));
+
+	$current_power = date('s');
+
+	// ############################################################
+	// transfer data to domoticz
+	// ############################################################
+
+	$domoticz->setValue($config['domoticz']['current_energy_id'], 0, $current_power);
