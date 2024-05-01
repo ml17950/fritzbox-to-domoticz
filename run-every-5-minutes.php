@@ -1,11 +1,11 @@
 <?php
-	include_once('lib/class.fritzbox.php');
-	include_once('lib/class.domoticz.php');
+	include_once(__DIR__.'/lib/class.fritzbox.php');
+	include_once(__DIR__.'/lib/class.domoticz.php');
 
-	if (!is_file('conf/config.ini'))
+	if (!is_file(__DIR__.'/conf/config.ini'))
 		die('conf/config.ini not found!');
 
-	$config = parse_ini_file('conf/config.ini', true);
+	$config = parse_ini_file(__DIR__.'/conf/config.ini', true);
 
 	if (empty($config['fritzbox']['hostaddr']) || empty($config['fritzbox']['username']) || empty($config['fritzbox']['password']))
 		die('fritzbox config missing or empty');
