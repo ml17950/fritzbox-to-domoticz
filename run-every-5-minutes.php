@@ -18,10 +18,12 @@
 	$fritzbox = new ClassFritzBox($config['fritzbox']['hostaddr'], $config['fritzbox']['password'], $config['fritzbox']['username']);
 	$domoticz = new ClassDomoticz($config['domoticz']['hostaddr']);
 
+	// ############################################################
+	// read data from fritzbox
+	// ############################################################
 
-
-
-	$current_power = date('s');
+	if (!$fritzbox->doLogin())
+		die('FritzBox login failed');
 
 	// ############################################################
 	// transfer data to domoticz
