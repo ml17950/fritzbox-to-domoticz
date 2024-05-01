@@ -25,6 +25,10 @@
 	if (!$fritzbox->doLogin())
 		die('FritzBox login failed');
 
+	$power = $fritzbox->getEnergyValues();
+
+	print_r($power);
+
 	// ############################################################
 	// transfer data to domoticz
 	// ############################################################

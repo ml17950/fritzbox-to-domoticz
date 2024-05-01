@@ -60,4 +60,39 @@ class ClassFritzBox {
 
 		return true;
 	}
+
+	public function getEnergyValues() {
+		$url = 'https://'.$this->fb_ip.'/net/home_auto_query.lua?sid='.$this->sid.'&no_sidrenew=1&command=EnergyStats_10&id=16&useajax=1&xhr=1&t'.time().'=nocache';
+
+		$header = array('Accept: */*',
+						'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0',
+						'Content-Type: application/json',
+						'X-Requested-With: XMLHttpRequest',
+						'Connection: keep-alive',
+						'Pragma: no-cache',
+						'Cache-Control: no-cache');
+
+		$options = array(
+			'http' => array(
+				'timeout' => 5,
+				'method'  => 'GET',
+				'header'  => $header
+			),
+			'ssl' => array(
+				'verify_peer'      => false,
+				'verify_peer_name' => false
+			)
+		);
+
+		$response = file_get_contents($url, false, stream_context_create($options));
+
+		$json = json_decode($response, true);
+
+		print_r($json);
+
+		$ret['current_power'] = round($json['MM_Value_Power'] / 100);
+		$ret['today_power'] = round($json['sum_Day'] / 100);
+
+		return $ret;
+	}
 }
