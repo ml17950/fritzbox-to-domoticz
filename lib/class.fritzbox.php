@@ -91,7 +91,7 @@ class ClassFritzBox {
 		// print_r($json);
 
 		$ret['current_power'] = round($json['MM_Value_Power'] / 100);
-		$ret['today_power'] = round($json['sum_Day'] / 100);
+		$ret['today_power'] = $json['sum_Day'];
 
 		return $ret;
 	}
