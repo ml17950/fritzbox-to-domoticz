@@ -1,0 +1,7 @@
+[fritzbox]
+hostaddr=192.168.178.1
+username=peter
+password=YouDontKnow
+
+[domoticz]
+hostaddr=192.168.178.2:1080
