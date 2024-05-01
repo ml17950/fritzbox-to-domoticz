@@ -38,7 +38,7 @@ class ClassDomoticz {
 
 		$response = $this->sendRequest($url);
 
-		print_r($response);
+		// print_r($response);
 
 		if ($response['status'] != 'OK')
 			return false;
