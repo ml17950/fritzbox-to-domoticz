@@ -33,4 +33,9 @@
 	// transfer data to domoticz
 	// ############################################################
 
-	$domoticz->setValue($config['domoticz']['current_energy_id'], 0, $current_power);
+	if ($power['current_power'] > 0) {
+		$domoticz->setValue($config['domoticz']['current_energy_id'], 0, $power['current_power']);
+
+		$power_data = $power['current_power'].';'.$power['today_power'];
+		$domoticz->setValue($config['domoticz']['today_energy_id'], 0, $power_data);
+	}
