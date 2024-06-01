@@ -95,4 +95,32 @@ class ClassFritzBox {
 
 		return $ret;
 	}
+
+	public function getTemperature($ain) {
+		$url = 'http://'.$this->fb_ip.'/webservices/homeautoswitch.lua?sid='.$this->sid.'&switchcmd=gettemperature&ain='.$ain;
+
+		$header = array('Accept: */*',
+						'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0',
+						'Content-Type: application/json',
+						'X-Requested-With: XMLHttpRequest',
+						'Connection: keep-alive',
+						'Pragma: no-cache',
+						'Cache-Control: no-cache');
+
+		$options = array(
+			'http' => array(
+				'timeout' => 5,
+				'method'  => 'GET',
+				'header'  => $header
+			),
+			'ssl' => array(
+				'verify_peer'      => false,
+				'verify_peer_name' => false
+			)
+		);
+
+		$response = file_get_contents($url, false, stream_context_create($options));
+
+		return trim($response);
+	}
 }

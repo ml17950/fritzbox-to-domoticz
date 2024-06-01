@@ -2,8 +2,10 @@
 hostaddr=192.168.178.1
 username=peter
 password=YouDontKnow
+temperature_ain=12345abcdef
 
 [domoticz]
 hostaddr=192.168.178.2:1080
 current_energy_id=123
 today_energy_id=124
+temperature_id=125

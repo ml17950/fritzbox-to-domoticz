@@ -25,17 +25,35 @@
 	if (!$fritzbox->doLogin())
 		die('FritzBox login failed');
 
+	echo "reading data from fritzbox...\n";
+	
 	$power = $fritzbox->getEnergyValues();
 
-	print_r($power);
+	if (!empty($config['fritzbox']['temperature_ain'])) {
+		$temp = $fritzbox->getTemperature($config['fritzbox']['temperature_ain']);
+	}
 
 	// ############################################################
 	// transfer data to domoticz
 	// ############################################################
 
+	echo "sending data to domoticz...\n";
+
 	if ($power['current_power'] > 0) {
+		echo "power: ",$power['current_power']," Watt\n";
+
 		$domoticz->setValue($config['domoticz']['current_energy_id'], 0, $power['current_power']);
 
 		$power_data = $power['current_power'].';'.$power['today_power'];
 		$domoticz->setValue($config['domoticz']['today_energy_id'], 0, $power_data);
 	}
+
+	if (!empty($config['fritzbox']['temperature_ain'])) {
+		$temperature = floatval($temp) / 10;
+
+		echo "temp : ",$temperature," °C\n";
+
+		$domoticz->setValue($config['domoticz']['temperature_id'], 0, $temperature);
+	}
+
+	echo "ready\n";
